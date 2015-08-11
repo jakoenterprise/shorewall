@@ -1,0 +1,35 @@
+---
+- hosts: all
+  tasks:
+    - name: installing Ansible requirements
+      yum: "name={{ item }} state=present update_cache=yes"
+      with_items:
+        - epel-release
+        - shorewall-4.5.4
+        - libselinux-python
+      sudo: true
+
+    - name: save iptables
+      command: iptables-save
+      sudo: true
+    - service: name=iptables state=stopped
+      sudo: true
+    - action: command /sbin/chkconfig iptables off
+      sudo: true
+
+    - name: placing plain configuration files
+      tags: configuration
+      copy: >
+        src={{ item }}
+        dest=/{{ item }}
+      with_items:
+        - etc/shorewall/blrules
+        - etc/shorewall/interfaces
+        - etc/shorewall/policy
+        - etc/shorewall/rules
+        - etc/shorewall/shorewall.conf
+        - etc/shorewall/zones
+      sudo: true
+
+    - service: name=shorewall state=restarted
+      sudo: true

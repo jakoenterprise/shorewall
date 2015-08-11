@@ -1,0 +1,23 @@
+#
+# Shorewall version 4 - Blacklist Rules File
+#
+# For information about entries in this file, type "man shorewall-blrules"
+#
+# Please see http://shorewall.net/blacklisting_support.htm for additional
+# information.
+#
+###################################################################################################################################################################################################
+#ACTION		SOURCE			DEST			PROTO	DEST	SOURCE		ORIGINAL	RATE		USER/	MARK	CONNLIMIT	TIME         HEADERS         SWITCH
+#									PORT	PORT(S)		DEST		LIMIT		GROUP
+WHITELIST	wan:\
+		199.83.128.0/21,\
+		198.143.32.0/19,\
+		149.126.72.0/21,\
+		103.28.248.0/22,\
+		45.64.64.0/22,\
+		185.11.124.0/22,\
+		192.230.64.0/18,\
+		10.0.2.2,\
+		192.168.33.1\
+					all
+DROP		wan			all

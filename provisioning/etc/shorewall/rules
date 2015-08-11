@@ -1,0 +1,33 @@
+#
+# Shorewall version 4 - Rules File
+#
+# For information on the settings in this file, type "man shorewall-rules"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-rules.html
+#
+######################################################################################################################################################################################
+#ACTION				SOURCE		DEST		PROTO	DEST	SOURCE		ORIGINAL	RATE		USER/		MARK	CONNLIMIT	TIME				HEADERS				SWITCH
+#																			PORT	PORT(S)		DEST			LIMIT		GROUP
+#SECTION ALL
+#SECTION ESTABLISHED
+#SECTION RELATED
+SECTION NEW
+# Open ssh
+ACCEPT				wan				$FW			tcp		22
+## open port 80 from the wan to the nginx running on your firewall.
+HTTP/ACCEPT		wan				$FW			-			80
+## open port 443 from the wan to the nginx running on your firewall.
+HTTPS/ACCEPT	wan				$FW 		-			443
+## allow ping
+Ping/ACCEPT		wan				$FW
+
+## rules from iptables
+ACCEPT				wan				$FW			tcp		6081
+ACCEPT				wan				$FW			tcp		8080
+ACCEPT				wan				$FW			tcp		8000
+ACCEPT				wan				$FW			tcp		48000:48030
+ACCEPT				wan				$FW			udp		48000:48003
+ACCEPT				wan				$FW			tcp		225
+ACCEPT				wan				$FW			tcp		6379:6381
+ACCEPT				wan				$FW			tcp		22
